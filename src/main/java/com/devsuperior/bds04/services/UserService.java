@@ -16,7 +16,7 @@ public class UserService implements UserDetailsService {
 
 	// instanciando o Logger
 	private static Logger Logger = LoggerFactory.getLogger(UserService.class);
-	
+
 	@Autowired
 	private UserRepository repository;
 
