@@ -25,17 +25,9 @@ public class EventService {
 	
 	@Transactional(readOnly=true)
 	public Page<EventDTO> findAllPaged(Pageable pageable) {
-		Page<Event> list=eventRepository.findAll(pageable); //findAllPaged = retorna uma página (Page)
+		Page<Event> list=eventRepository.findAll(pageable);
 		
 		return list.map(x -> new EventDTO(x));
-		
-		//List<ProductDTO> listDto=list.stream().map(x -> new ProductDTO(x)).collect(Collectors.toList());
-		/*List<ProductDTO> listDto=new ArrayList<>();
-		for(Product cat : list)
-		{
-			listDto.add(new ProductDTO(cat));
-		}
-		return listDto;*/
 	}
 	
 	@Transactional(readOnly=true)
@@ -54,9 +46,6 @@ public class EventService {
 		entity.setUrl(dto.getUrl());
 		entity.setCity(new City(dto.getCityId(), null));
 		
-		//entity.setDepartment(new Department(dto.getDepartmentId(), null));
-		//entity.setEvent(new Event(dto.getCityId(), null));
-		
 		entity=eventRepository.save(entity);
 		return new EventDTO(entity);
 	}
@@ -73,41 +62,4 @@ public class EventService {
 		}
 	}
 
-	/*@Transactional
-	public ProductDTO insert(ProductDTO dto) {
-		Product entity=new Product();
-		copyDtoToEntity(dto, entity); //entity.setName(dto.getName());
-		entity=repository.save(entity);
-		return new ProductDTO(entity);
-	}*/
-
-	/*@Transactional
-	public EventDTO update(Long id, EventDTO dto) {
-		try {
-			Event entity=eventRepository.getOne(id); //getOne para atualizar dados
-			
-			entity.setName(dto.getName());
-			entity.setDate(dto.getDate());
-			entity.setUrl(dto.getUrl());
-			entity.setCity(new City(dto.getCityId(), null));
-		
-			entity=eventRepository.save(entity);
-			return new EventDTO(entity);
-		}
-		catch(EntityNotFoundException e) { //EntityNotFoundException = exceção da JPA
-			throw new ResourceNotFoundException("Id not found "+id);
-		}
-	}*/
-
-	/*public void delete(Long id) {
-		try {
-			repository.deleteById(id);
-		}
-		catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException("Id not found "+id);
-		}
-		catch (DataIntegrityViolationException e) {
-			throw new DatabaseException("Integrity violation");
-		}
-	}*/
 }
